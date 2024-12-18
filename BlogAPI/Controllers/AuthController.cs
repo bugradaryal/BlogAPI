@@ -14,13 +14,13 @@ namespace stajAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LoginController : ControllerBase
+    public class AuthController : ControllerBase
     {
         private IUserServices _userServices;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private ITokenServices _tokenServices;
-        public LoginController(UserManager<User> userManager, SignInManager<User> signInManager, IOptions<JWT> jwt) 
+        public AuthController(UserManager<User> userManager, SignInManager<User> signInManager, IOptions<JWT> jwt) 
         {
             _userServices = new UserManager(userManager, signInManager);
             _tokenServices = new TokenManager(jwt, userManager);

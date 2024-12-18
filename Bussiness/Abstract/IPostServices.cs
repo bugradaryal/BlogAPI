@@ -12,5 +12,7 @@ namespace Bussiness.Abstract
         Task<Post> GetPostById(int postId);
         Task<IEnumerable<Post>> GetAllPosts(int CurrentPage);
         Task<int> PostCounts();
+        Task LikeThePost(int postId, string userId);
+        Task DislikeThePost(int likeId);
     }
 }

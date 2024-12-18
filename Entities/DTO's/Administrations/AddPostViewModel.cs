@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace Entities.DTO_s.Administrations
 {
-    public class PostViewModel
+    public class AddPostViewModel
     {
-        public int Id { get; set; }
         [Required]
         [MinLength(1)]
         [MaxLength(64)]

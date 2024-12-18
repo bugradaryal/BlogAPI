@@ -15,9 +15,12 @@ namespace stajAPI.Controllers
     {
         private IAdminServices _adminServices;
         private IPostServices _postServices;
+        private ICommentServices _commentServices;
         public AdminController(UserManager<User> userManager) 
         {
             _adminServices = new AdminManager(userManager);
+            _postServices = new PostManager();
+            _commentServices = new CommentManager();
         }
 
         [Authorize(Roles = "Administrator")]
@@ -55,7 +58,7 @@ namespace stajAPI.Controllers
         
         [HttpPost("AddPost")]
         [Authorize(Roles = "Administrator")]
-        public async Task<IActionResult> AddPost(PostViewModel postViewModel)
+        public async Task<IActionResult> AddPost(AddPostViewModel postViewModel)
         {
             try
             {
@@ -67,14 +70,14 @@ namespace stajAPI.Controllers
                     Content = postViewModel.Content,
                     Image = postViewModel.Image
                 });
-                return Ok();
+                return Ok(new {message = "Post added!"});
             }
             catch (Exception ex)
             {
                 return BadRequest(new { message = ex.Message });
             }
         }
-        [HttpPost("RemovePost")]
+        [HttpDelete("RemovePost")]
         [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> RemovePost(int postId)
         {
@@ -92,21 +95,21 @@ namespace stajAPI.Controllers
             }
         }
 
-        [HttpPost("UpdatePost")]
+        [HttpPut("UpdatePost")]
         [Authorize(Roles = "Administrator")]
-        public async Task<IActionResult> UpdatePost(PostViewModel postViewModel)
+        public async Task<IActionResult> UpdatePost(UpdatePostViewModel postViewModel)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest(new { message = ModelState });
-                await _adminServices.UpdatePost(new Post
-                {
-                    id = postViewModel.Id,
-                    Title = postViewModel.Title,
-                    Content = postViewModel.Content,
-                    Image = postViewModel.Image
-                });
+                var post = await _postServices.GetPostById(postViewModel.Id);
+                post.Title = postViewModel.Title;
+                post.Content = postViewModel.Content;
+                post.Image = postViewModel.Image;
+                post.Date = DateTime.Now;
+
+                await _adminServices.UpdatePost(post);
                 return Ok("Post updated!!");
             }
             catch(Exception ex)
@@ -114,6 +117,21 @@ namespace stajAPI.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
-        
+
+        [HttpDelete("DeleteCommentFromPost")]
+        [Authorize(Roles = "Administrator")]
+        public async Task<IActionResult> DeleteCommentFromPost(int commentId)
+        {
+            try
+            {
+                await _commentServices.DeleteCommentFromPost(commentId);
+                return Ok("Post deleted!!");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
     }
 }

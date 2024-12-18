@@ -1,5 +1,6 @@
 ﻿using Bussiness.Abstract;
 using Bussiness.Concrete;
+using Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -30,7 +31,7 @@ namespace stajAPI.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
-        [AllowAnonymous]
+        [Authorize]
         [HttpGet("GetPostById")]
         public async Task<IActionResult> GetPostById(int postId)
         {
@@ -53,6 +54,35 @@ namespace stajAPI.Controllers
             {
                 var Count = await _postServices.PostCounts();
                 return Ok(Count);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [Authorize]
+        [HttpPost("LikeThePost")]
+        public async Task<IActionResult> LikeThePost(int postId, string userId)
+        {
+            try
+            {
+                await _postServices.LikeThePost(postId, userId);
+                return Ok("Post Liked!!");
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+        [Authorize]
+        [HttpPost("DislikeThePost")]
+        public async Task<IActionResult> DislikeThePost(int likeId)
+        {
+            try
+            {
+                await _postServices.DislikeThePost(likeId);
+                return Ok("Post Disliked!!");
             }
             catch (Exception ex)
             {
