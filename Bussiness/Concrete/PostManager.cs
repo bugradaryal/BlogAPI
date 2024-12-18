@@ -19,9 +19,15 @@ namespace Bussiness.Concrete
         }
 
 
-        public async Task<IEnumerable<Post>> GetAllPosts()
+        public async Task<IEnumerable<Post>> GetAllPosts(int CurrentPage)
         {
-            var posts = await _postRepository.GetAllPosts();
+            var posts = await _postRepository.GetAllPosts(CurrentPage);
+            return posts;
+        }
+
+        public async Task<int> PostCounts()
+        {
+            var posts = await _postRepository.PostCounts();
             return posts;
         }
 

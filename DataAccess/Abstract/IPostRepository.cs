@@ -12,7 +12,9 @@ namespace DataAccess.Abstract
         Task AddPost(Post post);
         Task DeletePost(Post post);
         Task UpdatePost(Post post);
-        Task<IEnumerable<Post>> GetAllPosts();
+        Task<IEnumerable<Post>> GetAllPosts(int CurrentPage);
         Task<Post> GetPostById(int postId);
+        Task<int> PostCounts();
+
     }
 }

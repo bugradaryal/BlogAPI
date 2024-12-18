@@ -10,7 +10,7 @@ namespace DataAccess
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer("Server=.\\SQLExpress; Database=stajAPI; Trusted_Connection=True; MultipleActiveResultSets=true; TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer("Server=.\\SQLExpress; Database=BlogAPI; Trusted_Connection=True; MultipleActiveResultSets=true; TrustServerCertificate=True;");
         }
 
         public DbSet<User> Users { get; set; }
@@ -34,7 +34,8 @@ namespace DataAccess
             modelBuilder.Entity<Post>().Property(x => x.Title).HasColumnType("nvarchar").IsRequired().HasMaxLength(64);
             modelBuilder.Entity<Post>().Property(x => x.Date).HasColumnType("datetime").HasDefaultValue(DateTime.Now);
             modelBuilder.Entity<Post>().Property(x => x.Content).HasColumnType("nvarchar").HasMaxLength(720).IsRequired();
-            
+            modelBuilder.Entity<Post>().Property(x => x.Image).HasColumnType("varbinary(max)");
+
             modelBuilder.Entity<Like>().HasKey(x => x.id);
             modelBuilder.Entity<Like>().Property(x => x.post_id).IsRequired();
             modelBuilder.Entity<Like>().Property(x => x.Date).HasColumnType("datetime").HasDefaultValue(DateTime.Now);

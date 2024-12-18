@@ -10,6 +10,7 @@ namespace Bussiness.Abstract
     public interface IPostServices
     {
         Task<Post> GetPostById(int postId);
-        Task<IEnumerable<Post>> GetAllPosts();
+        Task<IEnumerable<Post>> GetAllPosts(int CurrentPage);
+        Task<int> PostCounts();
     }
 }

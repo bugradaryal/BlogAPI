@@ -13,6 +13,8 @@ namespace Entities
         public DateTime Date { get; set; }
         public string Content { get; set; }
 
+        public byte Image { get; set; }
+
         public ICollection<Comment> comments { get; set; }
         public ICollection<Like> likes { get; set; }
     }

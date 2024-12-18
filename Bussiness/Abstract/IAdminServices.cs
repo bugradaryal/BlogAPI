@@ -9,6 +9,10 @@ namespace Bussiness.Abstract
 {
     public interface IAdminServices
     {
+        Task GiveRoleToUser(string userId, string Role);
+        Task SuspendUser(string userId, bool suspend);
+
+
         Task AddPost(Post post);
         Task DeletePost(Post post);
         Task UpdatePost(Post post);

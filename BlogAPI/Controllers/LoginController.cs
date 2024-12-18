@@ -72,6 +72,13 @@ namespace stajAPI.Controllers
             try
             {
                 var result = await _tokenServices.ValidateToken(this.HttpContext);
+                if (result.user.AccountSuspended)
+                {
+                    Response.Headers.Remove("Authorization");
+                    Response.Headers.Remove("RefreshToken");
+                    return BadRequest(new { message = "User is suspended!!" });
+                }
+
                 return Ok(result);
             }
             catch(Exception ex)

@@ -65,6 +65,5 @@ namespace Bussiness.Concrete
                 throw new Exception(message: "Too many attempt. Account is locked for 5 min!");
             throw new Exception(message: "Email or password is wrong!");
         }
-
     }
 }

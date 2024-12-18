@@ -42,11 +42,19 @@ namespace DataAccess.Concrete
         }
 
 
-        public async Task<IEnumerable<Post>> GetAllPosts()
+        public async Task<int> PostCounts()
         {
             using (var _DBContext = new DataDbContext())
             {
-                return await _DBContext.Posts.ToListAsync();
+                return await _DBContext.Posts.CountAsync();
+            }
+        }
+
+        public async Task<IEnumerable<Post>> GetAllPosts(int CurrentPage)
+        {
+            using (var _DBContext = new DataDbContext())
+            {
+                return await _DBContext.Posts.OrderBy(x => x.id).Skip((CurrentPage - 1) * 8).Take(8).ToListAsync();
             }
         }
 
