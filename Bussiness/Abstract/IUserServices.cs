@@ -13,5 +13,6 @@ namespace Bussiness.Abstract
         Task DeleteUser(User user);
         Task UpdateUser(User user);
         Task<User> LoginUser(string email, string password);
+        Task<User> GetUserByEmail(string email);
     }
 }

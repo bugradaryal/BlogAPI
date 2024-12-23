@@ -122,6 +122,13 @@ namespace Bussiness.Concrete
             }
             throw new Exception("Reflesh token corrupted!!");
         }
+
+        public async Task<string> CreateTokenEmailConfirm(User user)
+        {
+            string token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            string encodedToken = HttpUtility.UrlEncode(token);
+            return encodedToken;
+        }
     }
 }
 

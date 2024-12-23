@@ -20,10 +20,14 @@ namespace stajAPI.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private ITokenServices _tokenServices;
-        public AuthController(UserManager<User> userManager, SignInManager<User> signInManager, IOptions<JWT> jwt) 
+        private IEmailServices _emailServices;
+        private IOptions<JWT> _jwt;
+        public AuthController(UserManager<User> userManager, SignInManager<User> signInManager, IOptions<JWT> jwt, IOptions<EmailSender> emailsender) 
         {
             _userServices = new UserManager(userManager, signInManager);
             _tokenServices = new TokenManager(jwt, userManager);
+            _emailServices = new EmailManager(emailsender, userManager);
+            _jwt = jwt;
         }
         [AllowAnonymous]
         [HttpPost("Register")]
@@ -33,7 +37,7 @@ namespace stajAPI.Controllers
             {
                 if (!ModelState.IsValid)
                     return BadRequest(new { message = ModelState });
-                 await _userServices.CreateUser(new User { Name = registerViewModel.Name, Surname = registerViewModel.Surname, UserName = registerViewModel.UserName, Email = registerViewModel.Email, Adress = registerViewModel.Adress, },registerViewModel.Password);
+                 await _userServices.CreateUser(new User { Name = registerViewModel.Name, Surname = registerViewModel.Surname, UserName = registerViewModel.UserName, Email = registerViewModel.Email, Adress = registerViewModel.Adress, PhoneNumber = registerViewModel.PhoneNumber },registerViewModel.Password);
 
                 return Ok(new { message = "Register is succesfull!!"});
             }
@@ -105,6 +109,43 @@ namespace stajAPI.Controllers
                 Response.Headers.Append("RefreshToken", newRefreshToken);
 
                 return Ok(new { message = "Login Succesfull With RefreshToken" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpPost("SendMail")]
+        [AllowAnonymous]
+        public async Task<IActionResult> SendingEmail(string email)
+        {
+            try
+            {
+                var user = await _userServices.GetUserByEmail(email);
+                if (user == null)
+                    return BadRequest(new { message = "Account does not exist!" });
+
+                var emailConfUrl = await _tokenServices.CreateTokenEmailConfirm(user);
+                var callback_url = _jwt.Value.Audience + "/Auth/Emailverification?userId=" + user.Id + "&emailConfUrl=" + emailConfUrl;
+
+
+                _emailServices.SendingEmail(email, callback_url);
+                return Ok(new { message = "Email verification code sended!!!" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+        [HttpGet("Emailverification")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Emailverification(string userId, string emailConfUrl)
+        {
+            try
+            {
+                await _emailServices.ConfirmEmail(userId, emailConfUrl);
+                return Ok(new { message = "Your email has been successfully confirmed!" });
             }
             catch (Exception ex)
             {

@@ -16,5 +16,6 @@ namespace Bussiness.Abstract
         string GenerateRefreshToken();
         Task<TokenValidationViewModel> ValidateToken(HttpContext context);
         string CreateTokenJWT(User user);
+        Task<string> CreateTokenEmailConfirm(User user);
     }
 }
