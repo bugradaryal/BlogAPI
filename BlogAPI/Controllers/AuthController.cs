@@ -70,7 +70,7 @@ namespace stajAPI.Controllers
         }
 
         [HttpPost("ValidateToken")]
-        [AllowAnonymous]
+        [Authorize]
         public async Task<IActionResult> ValidateToken()
         {
             try
