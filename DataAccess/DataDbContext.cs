@@ -24,7 +24,7 @@ namespace DataAccess
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<User>().Property(x => x.Name).HasColumnType("nvarchar").IsRequired().HasMaxLength(32);
             modelBuilder.Entity<User>().Property(x => x.Surname).HasColumnType("nvarchar").IsRequired().HasMaxLength(32);
-            modelBuilder.Entity<User>().Property(x => x.Adress).HasColumnType("nvarchar").HasMaxLength(160).HasDefaultValue("Undefined");
+            modelBuilder.Entity<User>().Property(x => x.Address).HasColumnType("nvarchar").HasMaxLength(160).HasDefaultValue("Undefined");
             modelBuilder.Entity<User>().HasIndex(x => x.Email).IsUnique();
             modelBuilder.Entity<User>().Property(x => x.AccountSuspended).HasColumnType("bit ").HasDefaultValue(false);
             

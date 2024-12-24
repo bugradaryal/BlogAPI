@@ -34,7 +34,7 @@ namespace DataAccess.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: false),
                     Surname = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: false),
-                    Adress = table.Column<string>(type: "nvarchar(160)", maxLength: 160, nullable: false, defaultValue: "Undefined"),
+                    Address = table.Column<string>(type: "nvarchar(160)", maxLength: 160, nullable: false, defaultValue: "Undefined"),
                     AccountSuspended = table.Column<bool>(type: "bit ", nullable: false, defaultValue: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -63,7 +63,7 @@ namespace DataAccess.Migrations
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 12, 18, 9, 44, 51, 963, DateTimeKind.Local).AddTicks(9285)),
+                    Date = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 12, 24, 11, 57, 1, 370, DateTimeKind.Local).AddTicks(9500)),
                     Content = table.Column<string>(type: "nvarchar(720)", maxLength: 720, nullable: false),
                     Image = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
                 },
@@ -186,7 +186,7 @@ namespace DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     user_id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     post_id = table.Column<int>(type: "int", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 12, 18, 9, 44, 51, 964, DateTimeKind.Local).AddTicks(2475)),
+                    Date = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 12, 24, 11, 57, 1, 371, DateTimeKind.Local).AddTicks(2076)),
                     Content = table.Column<string>(type: "nvarchar(360)", maxLength: 360, nullable: false)
                 },
                 constraints: table =>
@@ -213,7 +213,7 @@ namespace DataAccess.Migrations
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     post_id = table.Column<int>(type: "int", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 12, 18, 9, 44, 51, 964, DateTimeKind.Local).AddTicks(968)),
+                    Date = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 12, 24, 11, 57, 1, 371, DateTimeKind.Local).AddTicks(894)),
                     user_id = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
@@ -238,8 +238,8 @@ namespace DataAccess.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "14028ede-fc98-4e24-92a4-b4d5ff4fde28", null, "User", "USER" },
-                    { "639b9557-326b-485e-b1c7-7519ece7c405", null, "Administrator", "ADMİNİSTRATOR" }
+                    { "a1d7f161-c5bc-469e-bf3d-bc89a93c9ba5", null, "Administrator", "ADMİNİSTRATOR" },
+                    { "f14c0b08-2da0-46b1-90cc-63768b0801c2", null, "User", "USER" }
                 });
 
             migrationBuilder.CreateIndex(

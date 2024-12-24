@@ -130,7 +130,8 @@ if (app.Environment.IsDevelopment())
 app.UseCors(builder =>
     builder.WithOrigins("http://localhost:3000") // React adresi
            .AllowAnyMethod()
-           .AllowAnyHeader());
+           .AllowAnyHeader()
+           .WithExposedHeaders("Authorization", "RefreshToken"));
 
 app.MapControllers();
 

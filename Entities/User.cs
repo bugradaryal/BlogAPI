@@ -11,7 +11,7 @@ namespace Entities
     {
         public string Name { get; set; }
         public string Surname { get; set; }
-        public string Adress { get; set; }
+        public string Address { get; set; }
 
         public bool AccountSuspended { get; set; }
         public ICollection<Comment> comments { get; set; }

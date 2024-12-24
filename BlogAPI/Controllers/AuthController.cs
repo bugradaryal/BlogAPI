@@ -37,7 +37,7 @@ namespace stajAPI.Controllers
             {
                 if (!ModelState.IsValid)
                     return BadRequest(new { message = ModelState });
-                 await _userServices.CreateUser(new User { Name = registerViewModel.Name, Surname = registerViewModel.Surname, UserName = registerViewModel.UserName, Email = registerViewModel.Email, Adress = registerViewModel.Adress, PhoneNumber = registerViewModel.PhoneNumber },registerViewModel.Password);
+                 await _userServices.CreateUser(new User { Name = registerViewModel.Name, Surname = registerViewModel.Surname, UserName = registerViewModel.UserName, Email = registerViewModel.Email, Address = registerViewModel.Address, PhoneNumber = registerViewModel.PhoneNumber },registerViewModel.Password);
 
                 return Ok(new { message = "Register is succesfull!!"});
             }

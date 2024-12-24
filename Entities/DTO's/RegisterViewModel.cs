@@ -30,7 +30,7 @@ namespace Entities.DTO_s
         [Required]
         public string Password { get; set; }
         [MaxLength(160)]
-        public string Adress { get; set; }
+        public string Address { get; set; }
         [StringLength(10, ErrorMessage ="Invalid phone number!")]
         [RegularExpression(@"^[0-9]+$", ErrorMessage = "Wrong character type!")]
         public string PhoneNumber { get; set; }

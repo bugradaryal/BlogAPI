@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(DataDbContext))]
-    [Migration("20241218064452_InitialCreate")]
+    [Migration("20241224085701_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -41,7 +41,7 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("Date")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 12, 18, 9, 44, 51, 964, DateTimeKind.Local).AddTicks(2475));
+                        .HasDefaultValue(new DateTime(2024, 12, 24, 11, 57, 1, 371, DateTimeKind.Local).AddTicks(2076));
 
                     b.Property<int>("post_id")
                         .HasColumnType("int");
@@ -70,7 +70,7 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("Date")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 12, 18, 9, 44, 51, 964, DateTimeKind.Local).AddTicks(968));
+                        .HasDefaultValue(new DateTime(2024, 12, 24, 11, 57, 1, 371, DateTimeKind.Local).AddTicks(894));
 
                     b.Property<int>("post_id")
                         .HasColumnType("int");
@@ -104,7 +104,7 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("Date")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 12, 18, 9, 44, 51, 963, DateTimeKind.Local).AddTicks(9285));
+                        .HasDefaultValue(new DateTime(2024, 12, 24, 11, 57, 1, 370, DateTimeKind.Local).AddTicks(9500));
 
                     b.Property<byte[]>("Image")
                         .IsRequired()
@@ -133,7 +133,7 @@ namespace DataAccess.Migrations
                         .HasColumnType("bit ")
                         .HasDefaultValue(false);
 
-                    b.Property<string>("Adress")
+                    b.Property<string>("Address")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(160)
@@ -240,13 +240,13 @@ namespace DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "639b9557-326b-485e-b1c7-7519ece7c405",
+                            Id = "a1d7f161-c5bc-469e-bf3d-bc89a93c9ba5",
                             Name = "Administrator",
                             NormalizedName = "ADMİNİSTRATOR"
                         },
                         new
                         {
-                            Id = "14028ede-fc98-4e24-92a4-b4d5ff4fde28",
+                            Id = "f14c0b08-2da0-46b1-90cc-63768b0801c2",
                             Name = "User",
                             NormalizedName = "USER"
                         });
