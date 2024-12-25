@@ -106,7 +106,8 @@ namespace Bussiness.Concrete
         }
         public async Task SaveRefreshTokenAsync(User user, string refreshToken)
         {
-            var result = await _userManager.SetAuthenticationTokenAsync(user, "MyProvider", "RefreshToken", refreshToken);
+            await _userManager.RemoveAuthenticationTokenAsync(user, "Default", "RefreshToken");
+            var result = await _userManager.SetAuthenticationTokenAsync(user, "Default", "RefreshToken", refreshToken);
             if (!result.Succeeded)
             {
                 throw new Exception("Refresh token save failed.");
