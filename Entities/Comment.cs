@@ -10,6 +10,7 @@ namespace Entities
     {
         public int id { get; set; }
         public string user_id { get; set; }
+        public string UserName { get; set; }
         public int post_id { get; set; }
         public DateTime Date { get; set; }
         public string Content { get; set; }

@@ -38,7 +38,12 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("Date")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 12, 24, 11, 57, 1, 371, DateTimeKind.Local).AddTicks(2076));
+                        .HasDefaultValue(new DateTime(2024, 12, 27, 13, 45, 55, 877, DateTimeKind.Local).AddTicks(8426));
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasMaxLength(240)
+                        .HasColumnType("nvarchar");
 
                     b.Property<int>("post_id")
                         .HasColumnType("int");
@@ -67,7 +72,7 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("Date")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 12, 24, 11, 57, 1, 371, DateTimeKind.Local).AddTicks(894));
+                        .HasDefaultValue(new DateTime(2024, 12, 27, 13, 45, 55, 877, DateTimeKind.Local).AddTicks(6502));
 
                     b.Property<int>("post_id")
                         .HasColumnType("int");
@@ -101,7 +106,7 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("Date")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 12, 24, 11, 57, 1, 370, DateTimeKind.Local).AddTicks(9500));
+                        .HasDefaultValue(new DateTime(2024, 12, 27, 13, 45, 55, 877, DateTimeKind.Local).AddTicks(5020));
 
                     b.Property<byte[]>("Image")
                         .IsRequired()
@@ -237,13 +242,13 @@ namespace DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a1d7f161-c5bc-469e-bf3d-bc89a93c9ba5",
+                            Id = "8fc0e142-319e-4e7a-9405-578dd2a9c148",
                             Name = "Administrator",
                             NormalizedName = "ADMİNİSTRATOR"
                         },
                         new
                         {
-                            Id = "f14c0b08-2da0-46b1-90cc-63768b0801c2",
+                            Id = "3821dcb3-f015-4de5-8f00-a4861e5e7da2",
                             Name = "User",
                             NormalizedName = "USER"
                         });

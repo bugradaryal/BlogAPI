@@ -12,6 +12,8 @@ namespace Entities.DTO_s
         [Required]
         public string user_id { get; set; }
         [Required]
+        public string UserName { get; set; }
+        [Required]
         public int post_id { get; set; }
         [Required]
         [MinLength(1)]

@@ -46,6 +46,7 @@ namespace DataAccess
             modelBuilder.Entity<Comment>().Property(x => x.post_id).IsRequired();
             modelBuilder.Entity<Comment>().Property(x => x.Date).HasColumnType("datetime").HasDefaultValue(DateTime.Now);
             modelBuilder.Entity<Comment>().Property(x => x.Content).HasColumnType("nvarchar").HasMaxLength(360);
+            modelBuilder.Entity<Comment>().Property(x => x.UserName).HasColumnType("nvarchar").HasMaxLength(240).IsRequired();
             
             modelBuilder.Entity<Comment>().HasOne<User>(x => x.users).WithMany(y => y.comments).HasForeignKey(x => x.user_id);
             modelBuilder.Entity<Comment>().HasOne<Post>(x => x.posts).WithMany(y => y.comments).HasForeignKey(x => x.post_id);

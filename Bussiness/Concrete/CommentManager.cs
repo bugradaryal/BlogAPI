@@ -24,6 +24,7 @@ namespace Bussiness.Concrete
             await _commentRepository.AddCommentToPost(new Comment
             {
                 user_id = commentViewModel.user_id,
+                UserName = commentViewModel.UserName,
                 post_id = commentViewModel.post_id,
                 Content = commentViewModel.Content,
             });
