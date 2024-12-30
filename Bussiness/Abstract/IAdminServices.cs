@@ -9,6 +9,7 @@ namespace Bussiness.Abstract
 {
     public interface IAdminServices
     {
+        Task<ICollection<User>> GetAllUsers();
         Task GiveRoleToUser(string userId, string Role);
         Task SuspendUser(string userId, bool suspend);
 

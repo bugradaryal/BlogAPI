@@ -9,6 +9,7 @@ namespace DataAccess.Abstract
 {
     public interface IUserRepository
     {
+        Task<ICollection<User>> GetAllUsers();
         Task UpdateUser(User user);
     }
 }

@@ -31,7 +31,7 @@ namespace stajAPI.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
-        [Authorize]
+        [AllowAnonymous]
         [HttpGet("GetPostById")]
         public async Task<IActionResult> GetPostById(int postId)
         {
@@ -77,11 +77,11 @@ namespace stajAPI.Controllers
         }
         [Authorize]
         [HttpPost("DislikeThePost")]
-        public async Task<IActionResult> DislikeThePost(int likeId)
+        public async Task<IActionResult> DislikeThePost(int postId, string userId)
         {
             try
             {
-                await _postServices.DislikeThePost(likeId);
+                await _postServices.DislikeThePost(postId, userId);
                 return Ok("Post Disliked!!");
             }
             catch (Exception ex)

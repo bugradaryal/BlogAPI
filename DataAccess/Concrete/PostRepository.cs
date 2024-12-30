@@ -54,7 +54,7 @@ namespace DataAccess.Concrete
         {
             using (var _DBContext = new DataDbContext())
             {
-                return await _DBContext.Posts.OrderBy(x => x.id).Skip((CurrentPage - 1) * 8).Take(8).ToListAsync();
+                return await _DBContext.Posts.OrderBy(x => x.id).Skip((CurrentPage - 1) * 4).Take(4).ToListAsync();
             }
         }
 
@@ -62,7 +62,7 @@ namespace DataAccess.Concrete
         {
             using (var _DBContext = new DataDbContext())
             {
-                return await _DBContext.Posts.Where(x => x.id == postId).FirstAsync();
+                return await _DBContext.Posts.FirstAsync(x => x.id == postId);
             }
         }
 

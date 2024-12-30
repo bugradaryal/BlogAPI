@@ -24,6 +24,20 @@ namespace stajAPI.Controllers
         }
 
         [Authorize(Roles = "Administrator")]
+        [HttpPost("GetAllUsers")]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            try
+            {
+                return Ok(await _adminServices.GetAllUsers());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [Authorize(Roles = "Administrator")]
         [HttpPost("GiveRoleToUser")]
         public async Task<IActionResult> GiveRoleToUser(RoleViewModel roleViewModel)
         {

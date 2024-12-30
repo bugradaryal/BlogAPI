@@ -13,6 +13,6 @@ namespace Bussiness.Abstract
         Task<IEnumerable<Post>> GetAllPosts(int CurrentPage);
         Task<int> PostCounts();
         Task LikeThePost(int postId, string userId);
-        Task DislikeThePost(int likeId);
+        Task DislikeThePost(int postId, string userId);
     }
 }

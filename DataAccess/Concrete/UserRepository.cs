@@ -12,6 +12,12 @@ namespace DataAccess.Concrete
 {
     public class UserRepository : IUserRepository
     {
+        public async Task<ICollection<User>> GetAllUsers(){
+            using (var _DBContext = new DataDbContext())
+            {
+                return await _DBContext.Users.ToListAsync();
+            }
+        }
         public async Task UpdateUser(User user)
         {
             using (var _DBContext = new DataDbContext())

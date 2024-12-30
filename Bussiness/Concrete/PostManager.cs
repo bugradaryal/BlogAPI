@@ -51,6 +51,7 @@ namespace Bussiness.Concrete
 
         public async Task LikeThePost(int postId, string userId)
         {
+            var test = await _likeRepository.IsPostLiked(postId, userId);
             if (await _likeRepository.IsPostLiked(postId, userId))
                 throw new Exception("Post already liked!");
             await _likeRepository.LikeThePost(new Like
@@ -59,9 +60,12 @@ namespace Bussiness.Concrete
                 user_id = userId,
             });
         }
-        public async Task DislikeThePost(int likeId)
+        public async Task DislikeThePost(int postId, string userId)
         {
-            var like = await _likeRepository.GetLikeById(likeId);
+            if (!await _likeRepository.IsPostLiked(postId, userId))
+                throw new Exception("Post already dissliked!");
+            var like = await _likeRepository.GetLikeByValues(postId, userId);
+
             await _likeRepository.DislikeThePost(like);
         }
     }

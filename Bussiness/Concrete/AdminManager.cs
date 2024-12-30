@@ -24,6 +24,14 @@ namespace Bussiness.Concrete
             _userRepository = new UserRepository();
         }
 
+        public async Task<ICollection<User>> GetAllUsers()
+        {
+
+        var test = await _userRepository.GetAllUsers();
+            return await _userRepository.GetAllUsers();
+        }
+
+
         public async Task GiveRoleToUser(string userId, string Role = "User")
         {
             var user = await _userManager.FindByIdAsync(userId);
