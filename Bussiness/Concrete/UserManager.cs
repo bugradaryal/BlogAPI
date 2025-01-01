@@ -8,6 +8,7 @@ using Bussiness.Abstract;
 using DataAccess.Abstract;
 using DataAccess.Concrete;
 using Entities;
+using Entities.DTO_s;
 using Microsoft.AspNetCore.Identity;
 
 namespace Bussiness.Concrete
@@ -37,15 +38,22 @@ namespace Bussiness.Concrete
                 throw new Exception(message:result.Errors.ToString());
         }
 
-        public async Task DeleteUser(User user)
+        public async Task DeleteUser(string user_id)
         {
+            var user = await _userManager.FindByIdAsync(user_id);
             var result = await _userManager.DeleteAsync(user);
             if (!result.Succeeded)
                 throw new Exception(message: result.Errors.ToString());
         }
 
-        public async Task UpdateUser(User user)
+        public async Task UpdateUser(UserViewModel userViewModel)
         {
+            var user = await _userManager.FindByIdAsync(userViewModel.Id);
+            user.UserName = userViewModel.UserName;
+            user.Name = userViewModel.Name;
+            user.Surname = userViewModel.Surname;
+            user.PhoneNumber = userViewModel.PhoneNumber;
+            user.Address = userViewModel.Address;
             var result = await _userManager.UpdateAsync(user);
             if (!result.Succeeded)
                 throw new Exception(message: result.Errors.ToString());
