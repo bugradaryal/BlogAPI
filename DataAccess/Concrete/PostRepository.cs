@@ -50,11 +50,18 @@ namespace DataAccess.Concrete
             }
         }
 
-        public async Task<IEnumerable<Post>> GetAllPosts(int CurrentPage)
+        public async Task<ICollection<Post>> GetAllPosts(int CurrentPage)
         {
             using (var _DBContext = new DataDbContext())
             {
                 return await _DBContext.Posts.OrderBy(x => x.id).Skip((CurrentPage - 1) * 4).Take(4).ToListAsync();
+            }
+        }
+        public async Task<ICollection<Post>> GetAllPostForModerator(int CurrentPage)
+        {
+            using (var _DBContext = new DataDbContext())
+            {
+                return await _DBContext.Posts.OrderBy(x => x.id).Skip((CurrentPage - 1) * 10).Take(10).ToListAsync();
             }
         }
 

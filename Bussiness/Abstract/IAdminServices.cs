@@ -13,7 +13,7 @@ namespace Bussiness.Abstract
         Task GiveRoleToUser(string userId, string Role);
         Task SuspendUser(string userId, bool suspend);
 
-
+        Task<ICollection<Post>> GetAllPostForModerator(int CurrentPage);
         Task AddPost(Post post);
         Task DeletePost(Post post);
         Task UpdatePost(Post post);

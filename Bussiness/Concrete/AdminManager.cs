@@ -86,5 +86,10 @@ namespace Bussiness.Concrete
             await _postRepository.UpdatePost(post);
         }
 
+        public async Task<ICollection<Post>> GetAllPostForModerator(int CurrentPage)
+        {
+            return await _postRepository.GetAllPostForModerator(CurrentPage);
+        }
+
     }
 }

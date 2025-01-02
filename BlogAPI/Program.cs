@@ -69,8 +69,8 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
     // User settings.
     options.User.AllowedUserNameCharacters =
     "abcdefghýijklmnoöpqrsþtuüvwxyzABCDEFGHIÝJKLMNOÖPQRSTUÜVWXYZ0123456789-_";
-    options.User.RequireUniqueEmail = false;
-    options.SignIn.RequireConfirmedEmail = false;
+    options.User.RequireUniqueEmail = true;
+    options.SignIn.RequireConfirmedEmail = true;
 }).AddEntityFrameworkStores<DataDbContext>().AddDefaultTokenProviders();
 
 

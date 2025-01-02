@@ -127,7 +127,7 @@ namespace stajAPI.Controllers
                     return BadRequest(new { message = "Account does not exist!" });
 
                 var emailConfUrl = await _tokenServices.CreateTokenEmailConfirm(user);
-                var callback_url = _jwt.Value.Audience + "/Auth/Emailverification?userId=" + user.Id + "&emailConfUrl=" + emailConfUrl;
+                var callback_url = "http://localhost:3000/EmailVerification?userId=" + user.Id + "&emailConfUrl=" + emailConfUrl;
 
 
                 _emailServices.SendingEmail(email, callback_url);
@@ -138,13 +138,13 @@ namespace stajAPI.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
-        [HttpGet("Emailverification")]
+        [HttpPost("Emailverification")]
         [AllowAnonymous]
-        public async Task<IActionResult> Emailverification(string userId, string emailConfUrl)
+        public async Task<IActionResult> Emailverification([FromBody] EmailVeificationViewModel emailVeificationViewModel)
         {
             try
             {
-                await _emailServices.ConfirmEmail(userId, emailConfUrl);
+                await _emailServices.ConfirmEmail(emailVeificationViewModel.userId, emailVeificationViewModel.emailConfUrl);
                 return Ok(new { message = "Your email has been successfully confirmed!" });
             }
             catch (Exception ex)

@@ -1,6 +1,7 @@
 ﻿using Bussiness.Abstract;
 using Bussiness.Concrete;
 using Entities;
+using Entities.DTO_s;
 using Entities.DTO_s.Administrations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -93,11 +94,11 @@ namespace stajAPI.Controllers
         }
         [HttpDelete("RemovePost")]
         [Authorize(Roles = "Administrator")]
-        public async Task<IActionResult> RemovePost(int postId)
+        public async Task<IActionResult> RemovePost([FromBody] RemovePostViewModel removePostViewModel)
         {
             try
             {
-                var post = await _postServices.GetPostById(postId);
+                var post = await _postServices.GetPostById(removePostViewModel.postId);
                 if (post == null)
                     return BadRequest(new { message = "Post not exist!" });
                 await _adminServices.DeletePost(post);
@@ -140,6 +141,21 @@ namespace stajAPI.Controllers
             {
                 await _commentServices.DeleteCommentFromPost(commentId);
                 return Ok("Post deleted!!");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpPost("GetAllPostForModerator")]
+        [Authorize(Roles = "Administrator")]
+        public async Task<IActionResult> GetAllPostForModerator([FromBody]int CurrentPage)
+        {
+            try
+            {
+                var posts = await _adminServices.GetAllPostForModerator(CurrentPage);
+                return Ok(posts);
             }
             catch (Exception ex)
             {
