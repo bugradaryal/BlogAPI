@@ -118,7 +118,7 @@ namespace stajAPI.Controllers
 
         [HttpPost("SendMail")]
         [AllowAnonymous]
-        public async Task<IActionResult> SendingEmail(string email)
+        public async Task<IActionResult> SendingEmail([FromBody]string email)
         {
             try
             {

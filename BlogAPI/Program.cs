@@ -47,6 +47,7 @@ builder.Services.AddSwaggerGen(option =>
 });
 builder.Services.Configure<JWT>(builder.Configuration.GetSection("JWT"));
 builder.Services.AddScoped<IUserServices, UserManager>();
+builder.Services.Configure<EmailSender>(builder.Configuration.GetSection("EmailSender"));
 builder.Services.AddDbContext<DataDbContext>();
 
 builder.Services.AddIdentity<User, IdentityRole>(options =>

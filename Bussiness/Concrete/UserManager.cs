@@ -79,5 +79,13 @@ namespace Bussiness.Concrete
             var user = await _userManager.FindByEmailAsync(email);
             return user;
         }
+
+        public async Task ChangePassword(string user_id, string newpassword, string oldpassword)
+        {
+            var user = await _userManager.FindByIdAsync(user_id);
+            var response = await _userManager.ChangePasswordAsync(user, oldpassword, newpassword);
+            if (!response.Succeeded)
+                throw new Exception(message: "Password isn't correnct or something went wrong!!");
+        }
     }
 }

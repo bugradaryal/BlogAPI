@@ -48,5 +48,20 @@ namespace BlogAPI.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
+
+        [Authorize]
+        [HttpPut("ChangePassword")]
+        public async Task<IActionResult> ChangePassword([FromBody] PasswordViewModel passwordViewModel)
+        {
+            try
+            {
+                await _userServices.ChangePassword(passwordViewModel.User_Id, passwordViewModel.NewPassword, passwordViewModel.OldPassword);
+                return Ok(new { message = "Password successfully changed!" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
     }
 }
