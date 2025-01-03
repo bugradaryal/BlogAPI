@@ -11,12 +11,12 @@ namespace Entities.DTO_s.Administrations
     {
         [Required]
         [MinLength(1)]
-        [MaxLength(64)]
+        [MaxLength(250)]
         public string Title { get; set; }
         [Required]
         [MinLength(1)]
-        [MaxLength(720)]
+        [MaxLength(1800)]
         public string Content { get; set; }
-        public byte Image { get; set; }
+        public byte[] Image { get; set; }
     }
 }

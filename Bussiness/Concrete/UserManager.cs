@@ -25,6 +25,10 @@ namespace Bussiness.Concrete
             _signInManager = signInManager;
         }
 
+        public async Task<bool> AnyUser(string userId)
+        {
+            return await _userRepository.AnyUser(userId);
+        }
         public async Task CreateUser(User user, string password)
         {
             var result = await _userManager.CreateAsync(user,password);

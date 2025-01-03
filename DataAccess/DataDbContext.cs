@@ -31,9 +31,9 @@ namespace DataAccess
             modelBuilder.ApplyConfiguration(new SeedData.UserRoles());
 
             modelBuilder.Entity<Post>().HasKey(x => x.id);
-            modelBuilder.Entity<Post>().Property(x => x.Title).HasColumnType("nvarchar").IsRequired().HasMaxLength(64);
+            modelBuilder.Entity<Post>().Property(x => x.Title).HasColumnType("nvarchar").IsRequired().HasMaxLength(250);
             modelBuilder.Entity<Post>().Property(x => x.Date).HasColumnType("datetime").HasDefaultValue(DateTime.Now);
-            modelBuilder.Entity<Post>().Property(x => x.Content).HasColumnType("nvarchar").HasMaxLength(720).IsRequired();
+            modelBuilder.Entity<Post>().Property(x => x.Content).HasColumnType("nvarchar").HasMaxLength(1800).IsRequired();
             modelBuilder.Entity<Post>().Property(x => x.Image).HasColumnType("varbinary(max)");
 
             modelBuilder.Entity<Like>().HasKey(x => x.id);
@@ -45,7 +45,7 @@ namespace DataAccess
             modelBuilder.Entity<Comment>().Property(x => x.user_id).HasColumnType("nvarchar(450)");
             modelBuilder.Entity<Comment>().Property(x => x.post_id).IsRequired();
             modelBuilder.Entity<Comment>().Property(x => x.Date).HasColumnType("datetime").HasDefaultValue(DateTime.Now);
-            modelBuilder.Entity<Comment>().Property(x => x.Content).HasColumnType("nvarchar").HasMaxLength(360);
+            modelBuilder.Entity<Comment>().Property(x => x.Content).HasColumnType("nvarchar").HasMaxLength(720);
             modelBuilder.Entity<Comment>().Property(x => x.UserName).HasColumnType("nvarchar").HasMaxLength(240).IsRequired();
             
             modelBuilder.Entity<Comment>().HasOne<User>(x => x.users).WithMany(y => y.comments).HasForeignKey(x => x.user_id);

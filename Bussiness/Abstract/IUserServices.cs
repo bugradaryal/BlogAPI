@@ -16,5 +16,6 @@ namespace Bussiness.Abstract
         Task<User> LoginUser(string email, string password);
         Task<User> GetUserByEmail(string email);
         Task ChangePassword(string user_id, string newpassword, string oldpassword);
+        Task<bool> AnyUser(string userId);
     }
 }

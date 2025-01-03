@@ -26,5 +26,13 @@ namespace DataAccess.Concrete
                 await _DBContext.SaveChangesAsync();
             }
         }
+
+        public async Task<bool> AnyUser(string userId)
+        {
+            using (var _DBContext = new DataDbContext())
+            {
+                return await _DBContext.Users.AnyAsync(x=>x.Id == userId);
+            }
+        }
     }
 }

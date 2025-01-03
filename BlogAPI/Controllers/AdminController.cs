@@ -73,7 +73,7 @@ namespace stajAPI.Controllers
         
         [HttpPost("AddPost")]
         [Authorize(Roles = "Administrator")]
-        public async Task<IActionResult> AddPost(AddPostViewModel postViewModel)
+        public async Task<IActionResult> AddPost([FromBody]AddPostViewModel postViewModel)
         {
             try
             {

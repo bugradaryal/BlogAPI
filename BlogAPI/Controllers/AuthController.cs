@@ -82,7 +82,12 @@ namespace stajAPI.Controllers
                     Response.Headers.Remove("RefreshToken");
                     return BadRequest(new { message = "User is suspended!!" });
                 }
-
+                if (!await _userServices.AnyUser(result.user.Id))
+                {
+                    Response.Headers.Remove("Authorization");
+                    Response.Headers.Remove("RefreshToken");
+                    return BadRequest(new { message = "User is not exist!!" });
+                }
                 return Ok(result);
             }
             catch(Exception ex)

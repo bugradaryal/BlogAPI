@@ -16,10 +16,12 @@ namespace Bussiness.Concrete
     {
         private IPostRepository _postRepository;
         private readonly UserManager<User> _userManager;
+        private ICommentRepository _commentRepository;
         private IUserRepository _userRepository;
         public AdminManager(UserManager<User> userManager)
         {
             _postRepository = new PostRepository();
+            _commentRepository = new CommentRepository();
             _userManager = userManager;
             _userRepository = new UserRepository();
         }
@@ -88,7 +90,12 @@ namespace Bussiness.Concrete
 
         public async Task<ICollection<Post>> GetAllPostForModerator(int CurrentPage)
         {
-            return await _postRepository.GetAllPostForModerator(CurrentPage);
+            var posts = await _postRepository.GetAllPostForModerator(CurrentPage);
+            foreach (var post in posts)
+            {
+                post.comments = await _commentRepository.GetAllCommentsByPostId(post.id);
+            }
+            return posts;
         }
 
     }

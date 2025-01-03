@@ -32,13 +32,13 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("Content")
                         .IsRequired()
-                        .HasMaxLength(360)
+                        .HasMaxLength(720)
                         .HasColumnType("nvarchar");
 
                     b.Property<DateTime>("Date")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 12, 27, 13, 45, 55, 877, DateTimeKind.Local).AddTicks(8426));
+                        .HasDefaultValue(new DateTime(2025, 1, 3, 12, 53, 58, 659, DateTimeKind.Local).AddTicks(5605));
 
                     b.Property<string>("UserName")
                         .IsRequired()
@@ -72,7 +72,7 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("Date")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 12, 27, 13, 45, 55, 877, DateTimeKind.Local).AddTicks(6502));
+                        .HasDefaultValue(new DateTime(2025, 1, 3, 12, 53, 58, 659, DateTimeKind.Local).AddTicks(4468));
 
                     b.Property<int>("post_id")
                         .HasColumnType("int");
@@ -100,13 +100,13 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("Content")
                         .IsRequired()
-                        .HasMaxLength(720)
+                        .HasMaxLength(1800)
                         .HasColumnType("nvarchar");
 
                     b.Property<DateTime>("Date")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 12, 27, 13, 45, 55, 877, DateTimeKind.Local).AddTicks(5020));
+                        .HasDefaultValue(new DateTime(2025, 1, 3, 12, 53, 58, 659, DateTimeKind.Local).AddTicks(3282));
 
                     b.Property<byte[]>("Image")
                         .IsRequired()
@@ -114,7 +114,7 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(64)
+                        .HasMaxLength(250)
                         .HasColumnType("nvarchar");
 
                     b.HasKey("id");
@@ -242,13 +242,13 @@ namespace DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "8fc0e142-319e-4e7a-9405-578dd2a9c148",
+                            Id = "f44b04bd-6f6b-4479-89c4-203333f6bffe",
                             Name = "Administrator",
                             NormalizedName = "ADMİNİSTRATOR"
                         },
                         new
                         {
-                            Id = "3821dcb3-f015-4de5-8f00-a4861e5e7da2",
+                            Id = "6ba341aa-4cd5-436b-a5ac-0e26229ad8bd",
                             Name = "User",
                             NormalizedName = "USER"
                         });

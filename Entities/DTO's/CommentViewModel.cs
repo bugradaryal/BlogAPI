@@ -17,7 +17,7 @@ namespace Entities.DTO_s
         public int post_id { get; set; }
         [Required]
         [MinLength(1)]
-        [MaxLength(360)]
+        [MaxLength(720)]
         public string Content { get; set; }
     }
 }
