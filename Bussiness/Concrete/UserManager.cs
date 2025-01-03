@@ -75,6 +75,8 @@ namespace Bussiness.Concrete
                 return user;
             else if(result.IsLockedOut)
                 throw new Exception(message: "Too many attempt. Account is locked for 5 min!");
+            else if (result.IsNotAllowed)
+                throw new Exception(message: "Your email is not verified! Please check your mailbox!!");
             throw new Exception(message: "Email or password is wrong!");
         }
 
