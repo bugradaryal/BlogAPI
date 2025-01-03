@@ -18,12 +18,12 @@ namespace stajAPI.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("GetAllPosts")]
-        public async Task<IActionResult> GetAllPosts(int CurrentPage = 1)
+        [HttpGet("GetAllPostsByIndex")]
+        public async Task<IActionResult> GetAllPostsByIndex(int CurrentPage = 1, int index = 4)
         {
             try
             {
-                var posts = await _postServices.GetAllPosts(CurrentPage);
+                var posts = await _postServices.GetAllPostsByIndex(CurrentPage, index);
                 return Ok(posts);
             }
             catch (Exception ex)

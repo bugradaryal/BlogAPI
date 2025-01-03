@@ -12,5 +12,6 @@ namespace DataAccess.Abstract
         Task<ICollection<User>> GetAllUsers();
         Task UpdateUser(User user);
         Task<bool> AnyUser(string userId);
+        Task<int> UserCount();
     }
 }

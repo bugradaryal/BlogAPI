@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DataAccess.Abstract;
 using Entities;
+using Entities.DTO_s;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -41,7 +42,6 @@ namespace DataAccess.Concrete
             }
         }
 
-
         public async Task<int> PostCounts()
         {
             using (var _DBContext = new DataDbContext())
@@ -50,18 +50,11 @@ namespace DataAccess.Concrete
             }
         }
 
-        public async Task<ICollection<Post>> GetAllPosts(int CurrentPage)
+        public async Task<ICollection<Post>> GetAllPostsByIndex(int CurrentPage, int index)
         {
             using (var _DBContext = new DataDbContext())
             {
-                return await _DBContext.Posts.OrderBy(x => x.id).Skip((CurrentPage - 1) * 4).Take(4).ToListAsync();
-            }
-        }
-        public async Task<ICollection<Post>> GetAllPostForModerator(int CurrentPage)
-        {
-            using (var _DBContext = new DataDbContext())
-            {
-                return await _DBContext.Posts.OrderBy(x => x.id).Skip((CurrentPage - 1) * 10).Take(10).ToListAsync();
+                return await _DBContext.Posts.OrderBy(x => x.id).Skip((CurrentPage - 1) * index).Take(index).ToListAsync();
             }
         }
 
@@ -73,5 +66,24 @@ namespace DataAccess.Concrete
             }
         }
 
+        public async Task<ICollection<PostStaticsViewModel>> GetAllPostStatistics()
+        {
+            using (var _DBContext = new DataDbContext())
+            {
+                var endDate = DateTime.UtcNow;
+                var startDate = endDate.AddYears(-1);
+                return await _DBContext.Posts.Where(post => post.Date >= startDate && post.Date < endDate)
+            .GroupBy(post => new { post.Date.Year, post.Date.Month })
+            .Select(group => new PostStaticsViewModel
+            {
+                Year = group.Key.Year,
+                Month = group.Key.Month,
+                PostCount = group.Count()
+            })
+            .OrderBy(result => result.Year)
+            .ThenBy(result => result.Month)
+            .ToListAsync();
+            }
+        }
     }
 }

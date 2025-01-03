@@ -34,5 +34,13 @@ namespace DataAccess.Concrete
                 return await _DBContext.Users.AnyAsync(x=>x.Id == userId);
             }
         }
+
+        public async Task<int> UserCount()
+        {
+            using (var _DBContext = new DataDbContext())
+            {
+                return await _DBContext.Users.CountAsync();
+            }
+        }
     }
 }

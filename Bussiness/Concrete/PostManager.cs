@@ -23,9 +23,9 @@ namespace Bussiness.Concrete
         }
 
 
-        public async Task<IEnumerable<Post>> GetAllPosts(int CurrentPage)
+        public async Task<ICollection<Post>> GetAllPostsByIndex(int CurrentPage, int index)
         {
-            var posts = await _postRepository.GetAllPosts(CurrentPage);
+            var posts = await _postRepository.GetAllPostsByIndex(CurrentPage, index);
             foreach (var post in posts)
             {
                 post.likes = await _likeRepository.GetAllLikesByPostId(post.id);

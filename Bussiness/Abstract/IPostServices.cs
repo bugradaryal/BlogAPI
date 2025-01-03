@@ -10,7 +10,7 @@ namespace Bussiness.Abstract
     public interface IPostServices
     {
         Task<Post> GetPostById(int postId);
-        Task<IEnumerable<Post>> GetAllPosts(int CurrentPage);
+        Task<ICollection<Post>> GetAllPostsByIndex(int CurrentPage, int index);
         Task<int> PostCounts();
         Task LikeThePost(int postId, string userId);
         Task DislikeThePost(int postId, string userId);

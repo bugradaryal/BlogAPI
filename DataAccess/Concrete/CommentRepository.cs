@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DataAccess.Abstract;
 using Entities;
+using Entities.DTO_s;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -38,6 +39,26 @@ namespace DataAccess.Concrete
             {
                 var comment = await _DBContext.Comments.Where(x => x.post_id == postId).ToListAsync();
                 return comment;
+            }
+        }
+
+        public async Task<ICollection<CommentStaticsViewModel>> GetAllCommentStatistics()
+        {
+            using (var _DBContext = new DataDbContext())
+            {
+                var endDate = DateTime.UtcNow;
+                var startDate = endDate.AddYears(-1);
+                return await _DBContext.Comments.Where(comment => comment.Date >= startDate && comment.Date < endDate)
+            .GroupBy(comment => new { comment.Date.Year, comment.Date.Month })
+            .Select(group => new CommentStaticsViewModel
+            {
+                Year = group.Key.Year,
+                Month = group.Key.Month,
+                CommentCount = group.Count()
+            })
+            .OrderBy(result => result.Year)
+            .ThenBy(result => result.Month)
+            .ToListAsync();
             }
         }
 

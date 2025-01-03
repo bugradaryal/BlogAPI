@@ -7,6 +7,7 @@ using Bussiness.Abstract;
 using DataAccess.Abstract;
 using DataAccess.Concrete;
 using Entities;
+using Entities.DTO_s;
 using Entities.DTO_s.Administrations;
 using Microsoft.AspNetCore.Identity;
 
@@ -18,12 +19,14 @@ namespace Bussiness.Concrete
         private readonly UserManager<User> _userManager;
         private ICommentRepository _commentRepository;
         private IUserRepository _userRepository;
+        private ILikeRepository _likeRepository;
         public AdminManager(UserManager<User> userManager)
         {
             _postRepository = new PostRepository();
             _commentRepository = new CommentRepository();
             _userManager = userManager;
             _userRepository = new UserRepository();
+            _likeRepository = new LikeRepository();
         }
 
         public async Task<ICollection<User>> GetAllUsers()
@@ -88,14 +91,16 @@ namespace Bussiness.Concrete
             await _postRepository.UpdatePost(post);
         }
 
-        public async Task<ICollection<Post>> GetAllPostForModerator(int CurrentPage)
+        public async Task<AllStaticsViewModel> GetAllStatistics()
         {
-            var posts = await _postRepository.GetAllPostForModerator(CurrentPage);
-            foreach (var post in posts)
+            return new AllStaticsViewModel
             {
-                post.comments = await _commentRepository.GetAllCommentsByPostId(post.id);
-            }
-            return posts;
+                PostStatics = await _postRepository.GetAllPostStatistics(),
+                CommentStatics = await _commentRepository.GetAllCommentStatistics(),
+                LikeStatics = await _likeRepository.GetAllLikeStatistics(),
+                UserCount = await _userRepository.UserCount()
+            };
+
         }
 
     }

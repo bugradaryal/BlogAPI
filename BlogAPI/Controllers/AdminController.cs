@@ -147,15 +147,13 @@ namespace stajAPI.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
-
-        [HttpPost("GetAllPostForModerator")]
         [Authorize(Roles = "Administrator")]
-        public async Task<IActionResult> GetAllPostForModerator([FromBody]int CurrentPage)
+        [HttpGet("GetAllStatistics")]
+        public async Task<IActionResult> GetAllStatistics()
         {
             try
             {
-                var posts = await _adminServices.GetAllPostForModerator(CurrentPage);
-                return Ok(posts);
+                return Ok(await _adminServices.GetAllStatistics());
             }
             catch (Exception ex)
             {
