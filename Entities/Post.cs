@@ -14,26 +14,12 @@ namespace Entities
         public string Content { get; set; }
 
         public byte[] Image { get; set; }
+
+        public int category_id { get; set; }
        
         
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
+        public Category categories { get; set; }
         public ICollection<Comment> comments { get; set; }
         public ICollection<Like> likes { get; set; }
     }

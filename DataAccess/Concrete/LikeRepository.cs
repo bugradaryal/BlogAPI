@@ -52,12 +52,10 @@ namespace DataAccess.Concrete
             }
         }
 
-        public async Task<ICollection<LikeStaticsViewModel>> GetAllLikeStatistics()
+        public async Task<ICollection<LikeStaticsViewModel>> GetAllLikeStatistics(DateTime endDate, DateTime startDate)
         {
             using (var _DBContext = new DataDbContext())
             {
-                var endDate = DateTime.UtcNow;
-                var startDate = endDate.AddYears(-1);
                 return await _DBContext.Likes.Where(like => like.Date >= startDate && like.Date < endDate)
             .GroupBy(like => new { like.Date.Year, like.Date.Month })
             .Select(group => new LikeStaticsViewModel

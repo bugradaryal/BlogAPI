@@ -1,4 +1,5 @@
 ﻿using System;
+using DataAccess.SeedData;
 using Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,8 @@ namespace DataAccess
         public DbSet<Like> Likes { get; set; }
         public DbSet<Comment> Comments { get; set; }
 
+        public DbSet<Category> Categories { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -27,14 +30,19 @@ namespace DataAccess
             modelBuilder.Entity<User>().Property(x => x.Address).HasColumnType("nvarchar").HasMaxLength(160).HasDefaultValue("Undefined");
             modelBuilder.Entity<User>().HasIndex(x => x.Email).IsUnique();
             modelBuilder.Entity<User>().Property(x => x.AccountSuspended).HasColumnType("bit ").HasDefaultValue(false);
-            
+
+            modelBuilder.Entity<Category>().HasKey(x => x.id);
+            modelBuilder.Entity<Category>().Property(x => x.Name).HasColumnType("nvarchar").IsRequired().HasMaxLength(64).IsRequired();
+
             modelBuilder.ApplyConfiguration(new SeedData.UserRoles());
+            modelBuilder.ApplyConfiguration(new SeedData.Categories());
 
             modelBuilder.Entity<Post>().HasKey(x => x.id);
             modelBuilder.Entity<Post>().Property(x => x.Title).HasColumnType("nvarchar").IsRequired().HasMaxLength(250);
             modelBuilder.Entity<Post>().Property(x => x.Date).HasColumnType("datetime").HasDefaultValue(DateTime.Now);
             modelBuilder.Entity<Post>().Property(x => x.Content).HasColumnType("nvarchar").HasMaxLength(1800).IsRequired();
             modelBuilder.Entity<Post>().Property(x => x.Image).HasColumnType("varbinary(max)");
+            modelBuilder.Entity<Post>().Property(x => x.category_id).IsRequired();
 
             modelBuilder.Entity<Like>().HasKey(x => x.id);
             modelBuilder.Entity<Like>().Property(x => x.post_id).IsRequired();
@@ -47,14 +55,14 @@ namespace DataAccess
             modelBuilder.Entity<Comment>().Property(x => x.Date).HasColumnType("datetime").HasDefaultValue(DateTime.Now);
             modelBuilder.Entity<Comment>().Property(x => x.Content).HasColumnType("nvarchar").HasMaxLength(720);
             modelBuilder.Entity<Comment>().Property(x => x.UserName).HasColumnType("nvarchar").HasMaxLength(240).IsRequired();
-            
+
             modelBuilder.Entity<Comment>().HasOne<User>(x => x.users).WithMany(y => y.comments).HasForeignKey(x => x.user_id);
             modelBuilder.Entity<Comment>().HasOne<Post>(x => x.posts).WithMany(y => y.comments).HasForeignKey(x => x.post_id);
 
             modelBuilder.Entity<Like>().HasOne<Post>(x => x.posts).WithMany(y => y.likes).HasForeignKey(x => x.post_id);
             modelBuilder.Entity<Like>().HasOne<User>(x => x.users).WithMany(y => y.likes).HasForeignKey(x => x.user_id);
-            
-           
+
+            modelBuilder.Entity<Post>().HasOne<Category>(x => x.categories).WithOne(y => y.post).HasForeignKey<Post>(x => x.category_id);
         }
     }
 }

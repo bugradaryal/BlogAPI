@@ -57,19 +57,16 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Posts",
+                name: "Categories",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2025, 1, 3, 12, 53, 58, 659, DateTimeKind.Local).AddTicks(3282)),
-                    Content = table.Column<string>(type: "nvarchar(1800)", maxLength: 1800, nullable: false),
-                    Image = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Posts", x => x.id);
+                    table.PrimaryKey("PK_Categories", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -179,6 +176,29 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Posts",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2025, 1, 6, 14, 13, 12, 303, DateTimeKind.Local).AddTicks(5500)),
+                    Content = table.Column<string>(type: "nvarchar(1800)", maxLength: 1800, nullable: false),
+                    Image = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    category_id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Posts", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Posts_Categories_category_id",
+                        column: x => x.category_id,
+                        principalTable: "Categories",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Comments",
                 columns: table => new
                 {
@@ -187,7 +207,7 @@ namespace DataAccess.Migrations
                     user_id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(240)", maxLength: 240, nullable: false),
                     post_id = table.Column<int>(type: "int", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2025, 1, 3, 12, 53, 58, 659, DateTimeKind.Local).AddTicks(5605)),
+                    Date = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2025, 1, 6, 14, 13, 12, 304, DateTimeKind.Local).AddTicks(1738)),
                     Content = table.Column<string>(type: "nvarchar(720)", maxLength: 720, nullable: false)
                 },
                 constraints: table =>
@@ -214,7 +234,7 @@ namespace DataAccess.Migrations
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     post_id = table.Column<int>(type: "int", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2025, 1, 3, 12, 53, 58, 659, DateTimeKind.Local).AddTicks(4468)),
+                    Date = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2025, 1, 6, 14, 13, 12, 303, DateTimeKind.Local).AddTicks(8682)),
                     user_id = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
@@ -239,8 +259,22 @@ namespace DataAccess.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "6ba341aa-4cd5-436b-a5ac-0e26229ad8bd", null, "User", "USER" },
-                    { "f44b04bd-6f6b-4479-89c4-203333f6bffe", null, "Administrator", "ADMİNİSTRATOR" }
+                    { "51199aef-2a89-4a10-ae40-0cae23c14050", null, "User", "USER" },
+                    { "90741d00-3477-4f62-9a2b-1bbd0853c761", null, "Administrator", "ADMİNİSTRATOR" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Personal" },
+                    { 2, "Travel" },
+                    { 3, "Lifestyle" },
+                    { 4, "News" },
+                    { 5, "Marketting" },
+                    { 6, "Sports" },
+                    { 7, "Movies" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -308,6 +342,12 @@ namespace DataAccess.Migrations
                 name: "IX_Likes_user_id",
                 table: "Likes",
                 column: "user_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Posts_category_id",
+                table: "Posts",
+                column: "category_id",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -342,6 +382,9 @@ namespace DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "Posts");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
         }
     }
 }

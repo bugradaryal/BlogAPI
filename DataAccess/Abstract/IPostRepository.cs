@@ -16,7 +16,9 @@ namespace DataAccess.Abstract
         Task<ICollection<Post>> GetAllPostsByIndex(int CurrentPage, int index);
         Task<Post> GetPostById(int postId);
         Task<int> PostCounts();
-        Task<ICollection<PostStaticsViewModel>> GetAllPostStatistics();
+        Task<ICollection<PostStaticsViewModel>> GetAllPostStatistics(DateTime startDate, DateTime endDate);
+
+        Task<ICollection<Post>> GetPostBySearch(string title);
 
     }
 }

@@ -17,11 +17,13 @@ namespace stajAPI.Controllers
         private IAdminServices _adminServices;
         private IPostServices _postServices;
         private ICommentServices _commentServices;
+        private ICategoryServices _categoryServices;
         public AdminController(UserManager<User> userManager) 
         {
             _adminServices = new AdminManager(userManager);
             _postServices = new PostManager();
             _commentServices = new CommentManager();
+            _categoryServices = new CategoryManager();
         }
 
         [Authorize(Roles = "Administrator")]
@@ -79,11 +81,13 @@ namespace stajAPI.Controllers
             {
                 if (!ModelState.IsValid)
                     return BadRequest(new { message = ModelState });
+                var categoryId = await _categoryServices.GetCategoryIdByName(postViewModel.Category);
                 await _adminServices.AddPost(new Post
                 {
                     Title = postViewModel.Title,
                     Content = postViewModel.Content,
-                    Image = postViewModel.Image
+                    Image = postViewModel.Image,
+                    category_id = categoryId,
                 });
                 return Ok(new {message = "Post added!"});
             }
@@ -119,10 +123,12 @@ namespace stajAPI.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest(new { message = ModelState });
                 var post = await _postServices.GetPostById(postViewModel.Id);
+                var categoryId = await _categoryServices.GetCategoryIdByName(postViewModel.Category);
                 post.Title = postViewModel.Title;
                 post.Content = postViewModel.Content;
                 post.Image = postViewModel.Image;
                 post.Date = DateTime.Now;
+                post.category_id = categoryId;
 
                 await _adminServices.UpdatePost(post);
                 return Ok("Post updated!!");
@@ -148,12 +154,12 @@ namespace stajAPI.Controllers
             }
         }
         [Authorize(Roles = "Administrator")]
-        [HttpGet("GetAllStatistics")]
-        public async Task<IActionResult> GetAllStatistics()
+        [HttpPost("GetAllStatistics")]
+        public async Task<IActionResult> GetAllStatistics([FromBody] DateViewModel dateViewModel)
         {
             try
             {
-                return Ok(await _adminServices.GetAllStatistics());
+                return Ok(await _adminServices.GetAllStatistics(dateViewModel.startdate, dateViewModel.enddate));
             }
             catch (Exception ex)
             {

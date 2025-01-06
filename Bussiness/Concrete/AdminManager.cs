@@ -91,13 +91,13 @@ namespace Bussiness.Concrete
             await _postRepository.UpdatePost(post);
         }
 
-        public async Task<AllStaticsViewModel> GetAllStatistics()
+        public async Task<AllStaticsViewModel> GetAllStatistics(DateTime startDate, DateTime endDate)
         {
             return new AllStaticsViewModel
             {
-                PostStatics = await _postRepository.GetAllPostStatistics(),
-                CommentStatics = await _commentRepository.GetAllCommentStatistics(),
-                LikeStatics = await _likeRepository.GetAllLikeStatistics(),
+                PostStatics = await _postRepository.GetAllPostStatistics( startDate,  endDate),
+                CommentStatics = await _commentRepository.GetAllCommentStatistics( startDate,  endDate),
+                LikeStatics = await _likeRepository.GetAllLikeStatistics( startDate,  endDate),
                 UserCount = await _userRepository.UserCount()
             };
 

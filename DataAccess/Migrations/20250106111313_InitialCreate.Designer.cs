@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(DataDbContext))]
-    [Migration("20250103095359_InitialCreate")]
+    [Migration("20250106111313_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -24,6 +24,61 @@ namespace DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Entities.Category", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            id = 1,
+                            Name = "Personal"
+                        },
+                        new
+                        {
+                            id = 2,
+                            Name = "Travel"
+                        },
+                        new
+                        {
+                            id = 3,
+                            Name = "Lifestyle"
+                        },
+                        new
+                        {
+                            id = 4,
+                            Name = "News"
+                        },
+                        new
+                        {
+                            id = 5,
+                            Name = "Marketting"
+                        },
+                        new
+                        {
+                            id = 6,
+                            Name = "Sports"
+                        },
+                        new
+                        {
+                            id = 7,
+                            Name = "Movies"
+                        });
+                });
 
             modelBuilder.Entity("Entities.Comment", b =>
                 {
@@ -41,7 +96,7 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("Date")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2025, 1, 3, 12, 53, 58, 659, DateTimeKind.Local).AddTicks(5605));
+                        .HasDefaultValue(new DateTime(2025, 1, 6, 14, 13, 12, 304, DateTimeKind.Local).AddTicks(1738));
 
                     b.Property<string>("UserName")
                         .IsRequired()
@@ -75,7 +130,7 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("Date")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2025, 1, 3, 12, 53, 58, 659, DateTimeKind.Local).AddTicks(4468));
+                        .HasDefaultValue(new DateTime(2025, 1, 6, 14, 13, 12, 303, DateTimeKind.Local).AddTicks(8682));
 
                     b.Property<int>("post_id")
                         .HasColumnType("int");
@@ -109,7 +164,7 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("Date")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2025, 1, 3, 12, 53, 58, 659, DateTimeKind.Local).AddTicks(3282));
+                        .HasDefaultValue(new DateTime(2025, 1, 6, 14, 13, 12, 303, DateTimeKind.Local).AddTicks(5500));
 
                     b.Property<byte[]>("Image")
                         .IsRequired()
@@ -120,7 +175,13 @@ namespace DataAccess.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar");
 
+                    b.Property<int>("category_id")
+                        .HasColumnType("int");
+
                     b.HasKey("id");
+
+                    b.HasIndex("category_id")
+                        .IsUnique();
 
                     b.ToTable("Posts");
                 });
@@ -245,13 +306,13 @@ namespace DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f44b04bd-6f6b-4479-89c4-203333f6bffe",
+                            Id = "90741d00-3477-4f62-9a2b-1bbd0853c761",
                             Name = "Administrator",
                             NormalizedName = "ADMİNİSTRATOR"
                         },
                         new
                         {
-                            Id = "6ba341aa-4cd5-436b-a5ac-0e26229ad8bd",
+                            Id = "51199aef-2a89-4a10-ae40-0cae23c14050",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -401,6 +462,17 @@ namespace DataAccess.Migrations
                     b.Navigation("users");
                 });
 
+            modelBuilder.Entity("Entities.Post", b =>
+                {
+                    b.HasOne("Entities.Category", "categories")
+                        .WithOne("post")
+                        .HasForeignKey("Entities.Post", "category_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("categories");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -449,6 +521,12 @@ namespace DataAccess.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Entities.Category", b =>
+                {
+                    b.Navigation("post")
                         .IsRequired();
                 });
 

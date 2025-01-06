@@ -66,12 +66,10 @@ namespace DataAccess.Concrete
             }
         }
 
-        public async Task<ICollection<PostStaticsViewModel>> GetAllPostStatistics()
+        public async Task<ICollection<PostStaticsViewModel>> GetAllPostStatistics(DateTime startDate, DateTime endDate)
         {
             using (var _DBContext = new DataDbContext())
             {
-                var endDate = DateTime.UtcNow;
-                var startDate = endDate.AddYears(-1);
                 return await _DBContext.Posts.Where(post => post.Date >= startDate && post.Date < endDate)
             .GroupBy(post => new { post.Date.Year, post.Date.Month })
             .Select(group => new PostStaticsViewModel
@@ -83,6 +81,16 @@ namespace DataAccess.Concrete
             .OrderBy(result => result.Year)
             .ThenBy(result => result.Month)
             .ToListAsync();
+            }
+        }
+
+        public async Task<ICollection<Post>> GetPostBySearch(string title)
+        {
+            using (var _DBContext = new DataDbContext())
+            {
+                return await _DBContext.Posts
+                .Where(x => x.Title.ToLower().Contains(title.ToLower()))
+                .ToListAsync();
             }
         }
     }

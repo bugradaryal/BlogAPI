@@ -42,12 +42,10 @@ namespace DataAccess.Concrete
             }
         }
 
-        public async Task<ICollection<CommentStaticsViewModel>> GetAllCommentStatistics()
+        public async Task<ICollection<CommentStaticsViewModel>> GetAllCommentStatistics(DateTime startDate, DateTime endDate)
         {
             using (var _DBContext = new DataDbContext())
             {
-                var endDate = DateTime.UtcNow;
-                var startDate = endDate.AddYears(-1);
                 return await _DBContext.Comments.Where(comment => comment.Date >= startDate && comment.Date < endDate)
             .GroupBy(comment => new { comment.Date.Year, comment.Date.Month })
             .Select(group => new CommentStaticsViewModel

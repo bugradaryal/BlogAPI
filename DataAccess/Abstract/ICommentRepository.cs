@@ -13,6 +13,6 @@ namespace DataAccess.Abstract
         Task AddCommentToPost(Comment comment);
         Task DeleteCommentFromPost(int commentId);
         Task<ICollection<Comment>> GetAllCommentsByPostId(int postId);
-        Task<ICollection<CommentStaticsViewModel>> GetAllCommentStatistics();
+        Task<ICollection<CommentStaticsViewModel>> GetAllCommentStatistics(DateTime startDate, DateTime endDate);
     }
 }

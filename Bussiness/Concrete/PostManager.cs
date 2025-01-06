@@ -68,5 +68,10 @@ namespace Bussiness.Concrete
 
             await _likeRepository.DislikeThePost(like);
         }
+
+        public async Task<ICollection<Post>> GetPostBySearch(string title)
+        {
+            return await _postRepository.GetPostBySearch(title);
+        }
     }
 }

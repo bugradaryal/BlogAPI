@@ -15,6 +15,6 @@ namespace DataAccess.Abstract
         Task DislikeThePost(Like like);
         Task<Like> GetLikeByValues(int postId, string userId);
         Task<bool> IsPostLiked(int postId, string userId);
-        Task<ICollection<LikeStaticsViewModel>> GetAllLikeStatistics();
+        Task<ICollection<LikeStaticsViewModel>> GetAllLikeStatistics(DateTime startDate, DateTime endDate);
     }
 }
