@@ -89,14 +89,13 @@ namespace stajAPI.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
-
         [AllowAnonymous]
         [HttpGet("GetPostBySearch")]
-        public async Task<IActionResult> GetPostBySearch(string title)
+        public async Task<IActionResult> GetPostBySearch(string search, int index = 1)
         {
             try
             {
-                var posts = await _postServices.GetPostBySearch(title);
+                var posts = await _postServices.GetPostBySearch(search, index);
                 return Ok(posts);
             }
             catch (Exception ex)

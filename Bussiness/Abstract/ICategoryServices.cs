@@ -9,6 +9,6 @@ namespace Bussiness.Abstract
 {
     public interface ICategoryServices
     {
-        Task<int> GetCategoryIdByName(string Name);
+        Task<Category> GetCategoryIdByName(string Name);
     }
 }

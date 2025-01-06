@@ -32,7 +32,7 @@ namespace DataAccess
             modelBuilder.Entity<User>().Property(x => x.AccountSuspended).HasColumnType("bit ").HasDefaultValue(false);
 
             modelBuilder.Entity<Category>().HasKey(x => x.id);
-            modelBuilder.Entity<Category>().Property(x => x.Name).HasColumnType("nvarchar").IsRequired().HasMaxLength(64).IsRequired();
+            modelBuilder.Entity<Category>().Property(x => x.Name).HasColumnType("nvarchar").IsRequired().HasMaxLength(64);
 
             modelBuilder.ApplyConfiguration(new SeedData.UserRoles());
             modelBuilder.ApplyConfiguration(new SeedData.Categories());
@@ -62,7 +62,7 @@ namespace DataAccess
             modelBuilder.Entity<Like>().HasOne<Post>(x => x.posts).WithMany(y => y.likes).HasForeignKey(x => x.post_id);
             modelBuilder.Entity<Like>().HasOne<User>(x => x.users).WithMany(y => y.likes).HasForeignKey(x => x.user_id);
 
-            modelBuilder.Entity<Post>().HasOne<Category>(x => x.categories).WithOne(y => y.post).HasForeignKey<Post>(x => x.category_id);
+            modelBuilder.Entity<Post>().HasOne<Category>(x => x.categories).WithMany(y => y.post).HasForeignKey(x => x.category_id);
         }
     }
 }

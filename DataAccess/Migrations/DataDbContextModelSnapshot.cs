@@ -63,7 +63,7 @@ namespace DataAccess.Migrations
                         new
                         {
                             id = 5,
-                            Name = "Marketting"
+                            Name = "Marketing"
                         },
                         new
                         {
@@ -93,7 +93,7 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("Date")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2025, 1, 6, 14, 13, 12, 304, DateTimeKind.Local).AddTicks(1738));
+                        .HasDefaultValue(new DateTime(2025, 1, 6, 17, 33, 46, 650, DateTimeKind.Local).AddTicks(7530));
 
                     b.Property<string>("UserName")
                         .IsRequired()
@@ -127,7 +127,7 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("Date")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2025, 1, 6, 14, 13, 12, 303, DateTimeKind.Local).AddTicks(8682));
+                        .HasDefaultValue(new DateTime(2025, 1, 6, 17, 33, 46, 650, DateTimeKind.Local).AddTicks(6426));
 
                     b.Property<int>("post_id")
                         .HasColumnType("int");
@@ -161,7 +161,7 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("Date")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2025, 1, 6, 14, 13, 12, 303, DateTimeKind.Local).AddTicks(5500));
+                        .HasDefaultValue(new DateTime(2025, 1, 6, 17, 33, 46, 650, DateTimeKind.Local).AddTicks(5030));
 
                     b.Property<byte[]>("Image")
                         .IsRequired()
@@ -177,8 +177,7 @@ namespace DataAccess.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("category_id")
-                        .IsUnique();
+                    b.HasIndex("category_id");
 
                     b.ToTable("Posts");
                 });
@@ -303,13 +302,13 @@ namespace DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "90741d00-3477-4f62-9a2b-1bbd0853c761",
+                            Id = "096d52be-95c6-4ac9-b0a3-a0e8438d7a22",
                             Name = "Administrator",
                             NormalizedName = "ADMİNİSTRATOR"
                         },
                         new
                         {
-                            Id = "51199aef-2a89-4a10-ae40-0cae23c14050",
+                            Id = "0dd85ee5-2c4f-4af7-8f8e-6cb389244547",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -462,8 +461,8 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("Entities.Post", b =>
                 {
                     b.HasOne("Entities.Category", "categories")
-                        .WithOne("post")
-                        .HasForeignKey("Entities.Post", "category_id")
+                        .WithMany("post")
+                        .HasForeignKey("category_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -523,8 +522,7 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Entities.Category", b =>
                 {
-                    b.Navigation("post")
-                        .IsRequired();
+                    b.Navigation("post");
                 });
 
             modelBuilder.Entity("Entities.Post", b =>

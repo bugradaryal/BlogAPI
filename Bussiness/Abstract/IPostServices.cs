@@ -14,7 +14,6 @@ namespace Bussiness.Abstract
         Task<int> PostCounts();
         Task LikeThePost(int postId, string userId);
         Task DislikeThePost(int postId, string userId);
-
-        Task<ICollection<Post>> GetPostBySearch(string title);
+        Task<ICollection<Post>> GetPostBySearch(string title, int index);
     }
 }

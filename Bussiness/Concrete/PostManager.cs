@@ -25,14 +25,7 @@ namespace Bussiness.Concrete
 
         public async Task<ICollection<Post>> GetAllPostsByIndex(int CurrentPage, int index)
         {
-            var posts = await _postRepository.GetAllPostsByIndex(CurrentPage, index);
-            foreach (var post in posts)
-            {
-                post.likes = await _likeRepository.GetAllLikesByPostId(post.id);
-                post.comments = await _commentRepository.GetAllCommentsByPostId(post.id);
-            }
-
-            return posts;
+            return await _postRepository.GetAllPostsByIndex(CurrentPage, index);
         }
 
         public async Task<int> PostCounts()
@@ -43,10 +36,7 @@ namespace Bussiness.Concrete
 
         public async Task<Post> GetPostById(int postId)
         {
-            var post = await _postRepository.GetPostById(postId);
-            post.likes = await _likeRepository.GetAllLikesByPostId(post.id);
-            post.comments = await _commentRepository.GetAllCommentsByPostId(post.id);
-            return post;
+            return await _postRepository.GetPostById(postId);
         }
 
         public async Task LikeThePost(int postId, string userId)
@@ -68,10 +58,9 @@ namespace Bussiness.Concrete
 
             await _likeRepository.DislikeThePost(like);
         }
-
-        public async Task<ICollection<Post>> GetPostBySearch(string title)
+        public async Task<ICollection<Post>> GetPostBySearch(string title, int index)
         {
-            return await _postRepository.GetPostBySearch(title);
+            return await _postRepository.GetPostBySearch(title, index);
         }
     }
 }

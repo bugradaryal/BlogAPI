@@ -11,11 +11,11 @@ namespace DataAccess.Concrete
 {
     public class CategoryRepository : ICategoryRepository
     {
-        public async Task<int> GetCategoryIdByName(string Name)
+        public async Task<Category> GetCategoryIdByName(string Name)
         {
             using (var _DBContext = new DataDbContext())
             {
-                return await _DBContext.Categories.Where(x => x.Name == Name).Select(y => y.id).FirstOrDefaultAsync();
+                return await _DBContext.Categories.Where(x => x.Name == Name).FirstOrDefaultAsync();
             }
         }
     }

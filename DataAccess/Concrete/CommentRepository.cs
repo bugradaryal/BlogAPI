@@ -33,15 +33,6 @@ namespace DataAccess.Concrete
             }
         }
 
-        public async Task<ICollection<Comment>> GetAllCommentsByPostId(int postId)
-        {
-            using (var _DBContext = new DataDbContext())
-            {
-                var comment = await _DBContext.Comments.Where(x => x.post_id == postId).ToListAsync();
-                return comment;
-            }
-        }
-
         public async Task<ICollection<CommentStaticsViewModel>> GetAllCommentStatistics(DateTime startDate, DateTime endDate)
         {
             using (var _DBContext = new DataDbContext())

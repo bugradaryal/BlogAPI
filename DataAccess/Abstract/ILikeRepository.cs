@@ -10,7 +10,6 @@ namespace DataAccess.Abstract
 {
     public interface ILikeRepository
     {
-        Task<ICollection<Like>> GetAllLikesByPostId(int postId);
         Task LikeThePost(Like like);
         Task DislikeThePost(Like like);
         Task<Like> GetLikeByValues(int postId, string userId);

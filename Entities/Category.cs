@@ -11,6 +11,6 @@ namespace Entities
         public int id { get; set; }
         public string Name { get; set; }
 
-        public Post post { get; set; }
+        public ICollection<Post> post { get; set; }
     }
 }

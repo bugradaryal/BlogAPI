@@ -81,13 +81,13 @@ namespace stajAPI.Controllers
             {
                 if (!ModelState.IsValid)
                     return BadRequest(new { message = ModelState });
-                var categoryId = await _categoryServices.GetCategoryIdByName(postViewModel.Category);
+                var category = await _categoryServices.GetCategoryIdByName(postViewModel.Category);
                 await _adminServices.AddPost(new Post
                 {
                     Title = postViewModel.Title,
                     Content = postViewModel.Content,
                     Image = postViewModel.Image,
-                    category_id = categoryId,
+                    category_id = category.id,
                 });
                 return Ok(new {message = "Post added!"});
             }
@@ -123,12 +123,13 @@ namespace stajAPI.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest(new { message = ModelState });
                 var post = await _postServices.GetPostById(postViewModel.Id);
-                var categoryId = await _categoryServices.GetCategoryIdByName(postViewModel.Category);
+                var category = await _categoryServices.GetCategoryIdByName(postViewModel.Category);
                 post.Title = postViewModel.Title;
                 post.Content = postViewModel.Content;
                 post.Image = postViewModel.Image;
                 post.Date = DateTime.Now;
-                post.category_id = categoryId;
+                post.category_id = category.id;
+                post.categories = category;
 
                 await _adminServices.UpdatePost(post);
                 return Ok("Post updated!!");

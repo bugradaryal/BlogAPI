@@ -19,7 +19,7 @@ namespace DataAccess.SeedData
                 new Category { id = 2, Name = "Travel" },
                 new Category { id = 3, Name = "Lifestyle" },
                 new Category { id = 4, Name = "News" },
-                new Category { id = 5, Name = "Marketting" },
+                new Category { id = 5, Name = "Marketing" },
                 new Category { id = 6, Name = "Sports" },
                 new Category { id = 7, Name = "Movies" }
 

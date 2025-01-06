@@ -18,7 +18,7 @@ namespace Bussiness.Concrete
             _categoryRepository = new CategoryRepository();
         }
 
-        public async Task<int> GetCategoryIdByName(string Name)
+        public async Task<Category> GetCategoryIdByName(string Name)
         {
             return await _categoryRepository.GetCategoryIdByName(Name);
         }

@@ -54,7 +54,8 @@ namespace DataAccess.Concrete
         {
             using (var _DBContext = new DataDbContext())
             {
-                return await _DBContext.Posts.OrderBy(x => x.id).Skip((CurrentPage - 1) * index).Take(index).ToListAsync();
+                return await _DBContext.Posts.OrderBy(x => x.id).Skip((CurrentPage - 1) * index).Take(index)
+                    .Include(y => y.comments).Include(z => z.likes).Include(c => c.categories).ToListAsync();
             }
         }
 
@@ -62,7 +63,7 @@ namespace DataAccess.Concrete
         {
             using (var _DBContext = new DataDbContext())
             {
-                return await _DBContext.Posts.FirstAsync(x => x.id == postId);
+                return await _DBContext.Posts.Include(x => x.comments).Include(y => y.likes).Include(z => z.categories).FirstAsync(c => c.id == postId);
             }
         }
 
@@ -84,13 +85,18 @@ namespace DataAccess.Concrete
             }
         }
 
-        public async Task<ICollection<Post>> GetPostBySearch(string title)
+        public async Task<ICollection<Post>> GetPostBySearch(string title, int index)
         {
             using (var _DBContext = new DataDbContext())
             {
                 return await _DBContext.Posts
-                .Where(x => x.Title.ToLower().Contains(title.ToLower()))
-                .ToListAsync();
+                    .Where(x => x.Title.ToLower().Contains(title.ToLower()))  // Başlıkla arama
+                    .Include(y => y.comments)  // İlgili yorumları dahil et
+                    .Include(z => z.likes)  // İlgili beğenileri dahil et
+                    .Include(c => c.categories)  // İlgili kategorileri dahil et
+                    .Skip((index - 1) * 4)  // Sayfa numarasına göre atla
+                    .Take(4)  // Sayfa başına kaç veri alınacağını belirle
+                    .ToListAsync();
             }
         }
     }
