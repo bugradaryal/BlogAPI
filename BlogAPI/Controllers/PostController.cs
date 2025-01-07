@@ -1,6 +1,7 @@
 ﻿using Bussiness.Abstract;
 using Bussiness.Concrete;
 using Entities;
+using Entities.DTO_s;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -63,11 +64,11 @@ namespace stajAPI.Controllers
 
         [Authorize]
         [HttpPost("LikeThePost")]
-        public async Task<IActionResult> LikeThePost(int postId, string userId)
+        public async Task<IActionResult> LikeThePost([FromBody] LikePostViewModel likePostViewModel)
         {
             try
             {
-                await _postServices.LikeThePost(postId, userId);
+                await _postServices.LikeThePost(likePostViewModel.PostId, likePostViewModel.UserId);
                 return Ok("Post Liked!!");
             }
             catch(Exception ex)
@@ -77,11 +78,11 @@ namespace stajAPI.Controllers
         }
         [Authorize]
         [HttpPost("DislikeThePost")]
-        public async Task<IActionResult> DislikeThePost(int postId, string userId)
+        public async Task<IActionResult> DislikeThePost([FromBody] LikePostViewModel likePostViewModel)
         {
             try
             {
-                await _postServices.DislikeThePost(postId, userId);
+                await _postServices.DislikeThePost(likePostViewModel.PostId, likePostViewModel.UserId);
                 return Ok("Post Disliked!!");
             }
             catch (Exception ex)
