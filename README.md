@@ -20,3 +20,7 @@ A RESTful API built with .NET Core for a blogging platform. It provides user aut
 * **Role-Based Authorization:** Protected administrative endpoints using `[Authorize(Roles = "Administrator")]`.
 * **User Management:** Added administrative features for role assignment and account suspension (`IsUserSuspended`).
 * **Statistics:** Created LINQ aggregation queries to generate dashboard statistics, including post, comment, and user metrics with date-based filtering.
+
+## Related Project
+
+- **Frontend (React):** https://github.com/bugradaryal/Blog-React
